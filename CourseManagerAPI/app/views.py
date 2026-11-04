@@ -33,6 +33,16 @@ class ListCourse(APIView):
         return Response(serializer_instance.data,status=status.HTTP_200_OK)
 
 
+
+class RetrieveCourse(APIView):
+    def get(self,request,id):
+        e=get_object_or_404(Course,id=id)
+        serializer_instance=CourseSerializer(e)
+        return Response(serializer_instance.data,status=status.HTTP_200_OK)
+
+
+
+
 class UpdateCourse(APIView):
     def put(self,request,id):
         data=request.data
@@ -40,7 +50,7 @@ class UpdateCourse(APIView):
         serializer_instance=CourseSerializer(instance=e,data=data)
         if serializer_instance.is_valid():
             serializer_instance.save()
-            return Response(serializer_instance.data,status=status.HTTP_201_CREATED)
+            return Response(serializer_instance.data,status=status.HTTP_200_OK)
 
         else:
             return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
@@ -48,13 +58,13 @@ class UpdateCourse(APIView):
 
 
 class PartialUpdateCourse(APIView):
-    def put(self,request,id):
+    def patch(self,request,id):
         data=request.data
         e=get_object_or_404(Course,id=id)
         serializer_instance=CourseSerializer(instance=e,data=data,partial=True)
         if serializer_instance.is_valid():
             serializer_instance.save()
-            return Response(serializer_instance.data,status=status.HTTP_201_CREATED)
+            return Response(serializer_instance.data,status=status.HTTP_200_OK)
 
         else:
             return Response(serializer_instance.errors,status=status.HTTP_400_BAD_REQUEST)
@@ -65,8 +75,7 @@ class DeleteCourse(APIView):
     def delete(self,request,id):
         e = get_object_or_404(Course, id=id)
         serializer_instance = CourseSerializer(instance=e)
-        if serializer_instance.is_valid():
-            e.delete()
-            return Response(serializer_instance.data, status=status.HTTP_200_OK)
+        e.delete()
+        return Response(serializer_instance.data, status=status.HTTP_200_OK)
 
 

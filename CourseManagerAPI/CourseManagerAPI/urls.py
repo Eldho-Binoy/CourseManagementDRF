@@ -24,5 +24,7 @@ urlpatterns = [
     path('list',views.ListCourse.as_view()),
     path('update/<int:id>',views.UpdateCourse.as_view()),
     path('partialupdate/<int:id>',views.PartialUpdateCourse.as_view()),
+    path('delete/<int:id>',views.DeleteCourse.as_view()),
+    path('retrieve/<int:id>',views.RetrieveCourse.as_view()),
 
 ]
